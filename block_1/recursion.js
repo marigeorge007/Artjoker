@@ -1,203 +1,128 @@
+"use strict";
 //Рекурсия
-
 // task 3
-const getNumberDigits = (number, result, index) => {
-  let numArr = number.toString().split('');
-  index = index || 0;
-  result = result || {};
-  
-
-  if (numArr.length > index) {
-     result[numArr[index]] = ++result[numArr[index]] || 1;
-     return getNumberDigits(number, ++index, result)
-  };
-
-  return result;
-};
-
-// task 4
-const countUniqueWords = (sentence, result, index) => {
-  let wordArr = sentence.split(' ');
+function getNumberDigits(number, result, index) {
+    let numArr = number.toString().split('');
     index = index || 0;
     result = result || {};
 
-  if (wordArr.length > index) {
-    result[wordArr[index]] = ++result[wordArr[index]] || 1;
-    return countUniqueWords(sentence, result, ++index);
-  }
-  return result;
+    if (numArr.length > index) {
+        result[numArr[index]] = ++result[numArr[index]] || 1;
+        return getNumberDigits(number, ++index, result)
+    };
+    return result;
 };
 
+// task 4
+function countUniqueWords(string, wordsArray, counter, uniqWordsCounter) {
+    wordsArray = wordsArray || string.split(/[\s.,]+/gi);
+    uniqWordsCounter = uniqWordsCounter || 0;
+    counter = counter || 0;
+
+    if (counter < wordsArray.length) {
+        for (let word of wordsArray) {
+            for (let word2 of wordsArray) {
+                if (word === word2) {
+                    ++counter;
+                }
+            }
+            if (counter === 1) {
+                ++uniqWordsCounter;
+            }
+            return countUniqueWords(string, wordsArray, ++counter, ++uniqWordsCounter);
+        }
+    }
+    return uniqWordsCounter;
+}
 
 // task 5
- const getNumberWords = (sentence, index, result) => {
-  index = index || 0;
-  result = result || {};
-  let wordArr = sentence.split(' ');
+function getNumberWords(sentence, index, result) {
+    index = index || 0;
+    result = result || {};
+    let wordArr = sentence.split(' ');
 
     if (wordArr.length > index) {
-      result[wordArr[index]] = ++result[wordArr[index]] || 1;
-      getNumberWords(sentence, ++index, result) 
-  };
-
-  return result;
+        result[wordArr[index]] = ++result[wordArr[index]] || 1;
+        getNumberWords(sentence, ++index, result)
+    };
+    return result;
 };
 
 // task 6 
 function makefibonacci(num) {
-  if (num < 2) {
-    return num;
-  };
-  return fibonacchi(num - 1) + fibonacchi(num - 2);
+    if (num < 2) {
+        return num;
+    };
+    return fibonacchi(num - 1) + fibonacchi(num - 2);
 };
 
 // task 8
-
 function getFactorial(num) {
 
-  if (num === 1) {
-    return 1;
-  }
-
-  return num * getFactorial(n - 1);
+    if (num === 1) {
+        return 1;
+    }
+    return num * getFactorial(n - 1);
 }
 
 //  task 9
-
-const getSumElements = (arr, sum, index) => {
+function getSumOddEvenNum(array, result, index) {
     index = index || 0;
-    sum = sum || 0;
-  
-    if (index < arr.length) {
-        if (arr[index] % 2 === 0) {
-            sum += arr[index];
-            return getSumElements(arr, sum, ++index);
-        }else {
-            return getSumElements(arr, sum, ++index);
+    result = result || 0;
+
+    if (index < array.length) {
+        if (array[i] > 0 && array[i] % 2 !== 0) {
+            result += array[i];
+            return getSumElements(array, result, ++index);
+        } else {
+            return result;
         }
     }
 };
-const getSumElements = (arr, sum, index) => {
-    index = index || 0;
-    sum = sum || 0;
-    if (index < arr.length) {
-        if (arr[index] % 3 === 0) {
-          sum += arr[index];
-          return getSumElements(arr, sum, ++index);
-        }else {
-          return getSumElements(arr, sum, ++index);
-        }
-      }
-    };
-    
-const getSumElements = (arr, sum, index) => {
-    index = index || 0;
-    sum = sum || 0;
-    if (index < arr.length) {
-        if (arr[index] > 0) {
-          sum += arr[index];
-          return getSumElements(arr, sum, ++index);
-      } else {
-          return getSumElements(arr, sum, ++index);
-    }
-}
 
-const getSumElements = (arr, sum, index) => {
+function getSumElements(array, result, index) {
     index = index || 0;
-    sum = sum || 0;
-  
-if (index < arr.length) {
-    if (arr[index] < 0) {
-        sum += arr[index];
-        return getSumElements(arr, sum, ++index);
-    } else {
-        return getSumElements(arr, sum, ++index);
+    result = result || 0;
+
+    if (index < array.length) {
+        if (arr[index] % x === 0) {
+            result += array[index];
+            return getSumElements(array, result, ++index);
+        } else {
+            return result;
         }
     }
-    return sum;
-  }
-}
+};
 
 // task 10
-
-const countNegativeNum = (arr, index, count) => {
+function countNegativeNum(arr, i, count) {
     index = index || 0;
     count = count || 0;
     if (i < arr.length) {
 
-        if (arr[index] < 0) {
+        if (arr[i] < 0) {
             count++;
         }
-        return countNegativeNum(arr, ++index, count);
+        return countNegativeNum(arr, ++i, count);
     } else {
         return count;
     }
-};
-//количество простых
-const countArrElements = (arr, count, index) => {
-    index = index || 0;
-    count = count || 0;
-
-    if (index < arr.length) {
-        if (arr[index] % arr[index] === 0) {
-            count++;
-            return countArrElements(arr, count, ++index);
-        } else {
-            return ccountArrElements(arr, count, ++index);
-        }
-    }
-    return count;
 }
-//количество нулевых
-const countArrElements = (arrNumber, count, index) => {
-    index = index || 0;
-    count = count || 0;
-
-    if (index < arrNumber.length) {
-        if (arrNumber[index] === 0) {
-            count++;
-            return countArrElements(arrNumber, count, ++index);
-        } else {
-            return countArrElements(arrNumber, count, ++index);
-        }
-    }
-    return count;
-}
-
-//количество положительныx
-const countArrElements = (arrNumber, count, index) => {
-    index = index || 0;
-    count = count || 0;
-
-    if (index < arrNumber.length) {
-        if (arrNumber[index] > 0) {
-            count++;
-            return countNumb(arrNumber, count, ++index);
-        } else {
-            return countNumb(arrNumber, count, ++index);
-        }
-    }
-    return count;
-}
-
-
 
 // task 11 
-const convertToBinary = (num, binary, index) => {
+function convertToBinary(num, binary, i) {
     binary = binary || [];
     index = index || 0;
 
     if (num > 0) {
         binary.unshift(num % 2);
         num = Math.floor(num / 2);
-        return convertToBinary(num, binary, ++index);
+        return convertToBinary(num, binary, ++i);
     }
-        return binary.join('');
+    return binary.join('');
 }
 
-
-
-const convertToDemention = (number, num, sum, power, index) => {
+function convertToDemention(number, num, sum, power, index) {
     num = num || number.toString().split('').reverse();
     sum = sum || 0;
     power = power || 0;
@@ -213,74 +138,40 @@ const convertToDemention = (number, num, sum, power, index) => {
 }
 convertToDemention(111);
 
-
-
 // task 13
+function getSumElements(min, max, callback, indexI) {
+    indexI = indexI || min;
+    let sum = 0;
 
-const getSum = (min, max, sum = 0) => {
-    sum = sum + min;
-
-    if (min === max) {
-        return sum;
-    }
-
-    return getSum(++min, max, sum);
-}
-
-const getSum = (min, max, sum, index) => {
-    sum = sum || 0;
-    index = index || 0;
-
-    if (index <= max) {
-        sum += index;
-        return getSum(min, max, sum, ++index);
-    }
-
-    return sum;
-}
-
-//.....
-const getSum = (min, max, sum = 0) => {
-    if (min % 3 === 0) {
-        sum = sum + min;
-    }
-
-    if (min === max) {
-        return sum;
-    }
-
-    return getSum(++min, max, sum);
-}
-
-
-//......
-const getSum = (min, max, sum = 0) => {
-    sum = sum || 0;
-
-    if (++min <= max) {
-        if (min > 0) {
-            sum += min;
+    if (indexI <= max) {
+        if (callback(indexI)) {
+            sum += indexI;
         }
-        return sum = sumMinMaxValue(min, max, sum);
+
+        return sum + getSumElements(min, max, callback, ++indexI);
     }
 
     return sum;
 }
 
- //task 15
+getSumElements(-10, 50, item => item % 3 === 0); //Сумма чисел кратных трем
+getSumElements(-10, 50, item => item > 0); //Сумма положительных чисел
+getSumElements(-10, 50, item => true); //Сумма всех чисел
 
-const transposeMatrix = (matrix, row, coll, result) => {
+
+
+//task 15
+function transposeMatrix(matrix, row, coll, result) {
     row = row || 0;
     coll = coll || 0;
     result = result || [];
 
-    if (row < matrix[0].length) {       
+    if (row < matrix.length) {
         if (typeof result[row] === "undefined") {
-            result[row] = [];
+            result.push([]);
         }
-
         if (coll < matrix.length) {
-            result[row][coll] = matrix[coll][row];
+            result[coll].push(matrix[coll][row]);
             return transposeMatrix(matrix, row, ++coll, result);
         }
         coll = 0;
@@ -290,19 +181,18 @@ const transposeMatrix = (matrix, row, coll, result) => {
     return result;
 }
 
-
 //task 16
-const addTwoMatrix = (matrix, matrix2, i, j) => {
-    i = i || 0;
-    j = j || 0;
+function addTwoMatrix(matrix, matrix2, indexI, indexJ) {
+    indexI = indexI || 0;
+    indexJ = indexJ || 0;
 
     if (i < matrix.length) {
         if (j === matrix.length) {
             j = 0;
-            return addTwoMatrix(matrix, matrix2, ++i, j);
-      } else {
-         matrix[i][j] += matrix2[i][j];
-         return addTwoMatrix(matrix, matrix2, i, ++j);
+            return addTwoMatrix(matrix, matrix2, ++indexI, indexJ);
+        } else {
+            matrix[i][j] += matrix2[i][j];
+            return addTwoMatrix(matrix, matrix2, indexI, ++indexJ);
         }
     } else {
         return matrix;
@@ -310,38 +200,37 @@ const addTwoMatrix = (matrix, matrix2, i, j) => {
 }
 
 //task 17
-
-const deleteMatrixWithZero = (matrix, index) => {
+function deleteMatrixWithZero(matrix, i) {
     index = index || 0;
 
     if (i < matrix.length) {
-        for (let j = 0; j < matrix[0].length; j++) {
+        for (let j = 0; j < matrix[i].length; j++) {
             if (matrix[i][j] === 0) {
-                matrix.splice(index, 1);
-                --index;
+                matrix.splice(i, 1);
+                --i;
                 break;
             }
         }
-        return deleteMatrixWithZero(matrix, ++index);
+        return deleteMatrixWithZero(matrix, ++i);
     }
 
     return matrix;
 }
 
-const deleteColumnWithZero = (matrix, index) => {
-    index = index || 0
+function deleteColumnWithZero(matrix, i) {
+    index = index || 0;
 
     if (i < matrix.length) {
-        for (let j = 0; j < matrix[0].length; j++) {
+        for (let j = 0; j < matrix[i].length; j++) {
 
             if (matrix[j][i] === 0) {
                 for (let k = 0; k < matrix.length; k++) {
-                    matrix[k].splice(index, 1);
+                    matrix[k].splice(i, 1);
                 }
                 break;
             }
         }
-        return deleteColumnWithZero(matrix, ++index);
+        return deleteColumnWithZero(matrix, ++i);
     }
-        return matrix;
+    return matrix;
 };
