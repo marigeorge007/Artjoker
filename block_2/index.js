@@ -1,36 +1,60 @@
 //1 Написать свою реализацию функций bind, call. Новая реализация должна по функционалу работать аналогично как и соответствующие стандартные функции. Без использования стандартных функций.
 // my bind
-let element = {
-  height: 25,
-  getHeight: function () {
-    return this.height;
-  },
+const person = {
+  name: 'Mark',
+}
+
+function info(phone, email) {
+  console.log(`Имя: ${this.name}, Теl.:${phone}, Email: ${email}`);
 };
 
-let getElementHeight = element.getHeight.bind(element);
-getElementHeight();
+function myBind(fn, context, ...rest) {
+  return function (...args) {
+    let uniqId = Date.now().toString();;
+    context[uniqId] = fn;
+    let result = context[uniqId](...rest.concat(args));
+    delete context[uniqId];
+    return result;
+  }
+}
+
+myBind(info, person)('12345', 'm@gmail.com');
+myBind(info, person, '12345')('m@gmail.com');
+myBind(info, person, '12345', 'm@gmail.com')();
+
+//my bind
+
+Function.prototype.myBind = function (object, ...rest) {
+  return function (...args) {
+    let symbol = Symbol();
+    object[symbol] = this;
+    let result = object[symbol](...rest, ...args);
+    delete object[symbol];
+    return result;
+  }
+}
+
 
 // Call
-let sizes = {
-    width: 5,
-    height: 10
-  },
-  getSquare = function () {
-    return this.width * this.height;
-  };
+function myCall(fn, context, ...args) {
+  let uniqId = Date.now().toString();
+  context[uniqId] = fn;
+  let result = context[uniqId](...args);
+  delete context[uniqId];
+  return result;
+};
+//myCall(info, person, '1234', 'c@gmail.com');
 
-getSquare.call(sizes);
+// Call 
+Function.prototype.myCall = function (object, ...args) {
+  let symbol = Symbol();
+  object[symbol] = this;
+  let result = object[symbol](...args);
+  delete object[symbol];
+  return result;
+}
 
-//2.
-//Map
-// const arr = [1, 2, 3, 4, 5, 6, 7, 8];
-
-// const numArr = arr.map((num) => {
-//   return {
-//     digit: num,
-//     odd: num % 2 !== 0,
-//   };
-// });
+//2. Map
 Array.prototype.myMap = function (callback) {
   let result = [];
 
@@ -40,14 +64,7 @@ Array.prototype.myMap = function (callback) {
   return result;
 };
 
-//Filter
-
-// const names = ['Mariia', 'Alex', 'Ann', 'Vladislav'];
-
-// const shortNames = names.filter(function(name) {
-//   return names.length < 5;
-// });
-
+// Filter
 Array.prototype.myFilter = function (callback) {
   let arr = [];
 
@@ -56,26 +73,19 @@ Array.prototype.myFilter = function (callback) {
       arr.push(this[i]);
     }
   }
-
   return arr;
 }
 
 //Reduce
-
-// const arr = ['apple', 'orange', 'pear']
-
-// const res = arr.reduce((sum, current) => `${sum}, ${current}`);
-
 Array.prototype.myReduce = function (callback) {
-  let a = 0;
+  let res = 0;
   for (let i = 0; i < this.length; i++) {
-    callback(a = a + this[i])
+    callback(res = res + this[i]);
   }
-  return a;
+  return res;
 }
 
 //forEach
-
 Array.prototype.myForEach = function (callback) {
   for (let i = 0; i < this.length; i++) {
     callback(this[i], i, this);
@@ -115,7 +125,7 @@ function* generatorFibonacci() {
     nextNum = prevNum + current;
     yield current;
   }
-}
+};
 //let fib = generatorFibonacci();
 // console.log(fib.next().value); 
 // console.log(fib.next().value);
