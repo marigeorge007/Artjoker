@@ -9,7 +9,7 @@ Function.prototype.myBind = function (object, ...rest) {
     delete object[symbol];
     return result;
   };
-}
+};
 
 // Call 
 Function.prototype.myCall = function (object, ...args) {
@@ -18,7 +18,7 @@ Function.prototype.myCall = function (object, ...args) {
   let result = object[symbol](...args);
   delete object[symbol];
   return result;
-}
+};
 
 //2. Map
 Array.prototype.myMap = function (callback) {
@@ -40,7 +40,7 @@ Array.prototype.myFilter = function (callback) {
     }
   }
   return arr;
-}
+};
 
 //Reduce
 Array.prototype.myReduce = function (callback, initialValue) {
@@ -49,7 +49,7 @@ Array.prototype.myReduce = function (callback, initialValue) {
     callback(acc = acc + this[i]);
     return acc;
   }
-}
+};
 //forEach
 Array.prototype.myForEach = function (callback) {
   for (let i = 0; i < this.length; i++) {
