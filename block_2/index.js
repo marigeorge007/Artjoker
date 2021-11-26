@@ -2,9 +2,9 @@
 //my bind
 
 Function.prototype.myBind = function (object, ...rest) {
+  let symbol = Symbol();
   object[symbol] = this;
   return function (...args) {
-    let symbol = Symbol();
     let result = object[symbol](...rest, ...args);
     delete object[symbol];
     return result;
@@ -43,14 +43,13 @@ Array.prototype.myFilter = function (callback) {
 }
 
 //Reduce
-Array.prototype.myReduce = function (callback) {
-  let acc = 0; // шаг1 декларируем аккумулятор;
-  for (let i = 0; i < this.length; i++) { // шаг2 выполняется цикл;
-    callback(acc = acc + this[i]); //  шаг3 складываем сумму всех элементов в массиве в aккумулятор шаг1;
+Array.prototype.myReduce = function (callback, initialValue) {
+  let acc = initialValue;
+  for (let i = 0; i < this.length; i++) {
+    callback(acc = acc + this[i]);
+    return acc;
   }
-  return acc; //  шаг4 возвращаем аккумулятор;
 }
-
 //forEach
 Array.prototype.myForEach = function (callback) {
   for (let i = 0; i < this.length; i++) {
